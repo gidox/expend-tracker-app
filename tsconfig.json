@@ -1,11 +1,18 @@
 {
   "extends": "expo/tsconfig.base",
+  "include": ["./src"],
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "strict": false,
-    "baseUrl": ".",
+    "baseUrl": "src",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "jsx": "react-native",
     "paths": {
-      "@components": ["src/components"],
-      "@components/*": ["src/components/*"],
+      "@components": ["components"],
+      "@components/*": ["components/*"]
     }
   }
 }

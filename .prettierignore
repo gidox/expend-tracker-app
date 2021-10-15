@@ -1,0 +1,7 @@
+# Ignore artifacts:
+build
+coverage
+.expo
+.expo-shared
+.node_modules
+
