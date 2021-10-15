@@ -12,7 +12,11 @@
     "jsx": "react-native",
     "paths": {
       "@components": ["components"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@screens": ["screens"],
+      "@screens/*": ["screens/*"],
+      "@navigation": ["navigation"],
+      "@navigation/*": ["navigation/*"]
     }
   }
 }

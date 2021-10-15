@@ -1,27 +1,19 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
-import { TransactionForm } from "@components/TransactionForm";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { NavigationContainer } from "@navigation";
 
 export default function App(): React.ReactElement {
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <Layout style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <TransactionForm />
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
         <StatusBar style="auto" />
-      </Layout>
-    </ApplicationProvider>
+        <NavigationContainer />
+      </ApplicationProvider>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
