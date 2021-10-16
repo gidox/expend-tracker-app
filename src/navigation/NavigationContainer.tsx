@@ -11,9 +11,17 @@ import {
 
 import Home from "@screens/Home";
 import { View } from "react-native";
+import AddTransaction from "@screens/AddTransaction";
+
+export type RootBottomParamList = {
+  Home: undefined;
+  Transactions: undefined;
+  Account: undefined;
+};
 
 const Stack = createNativeStackNavigator();
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen, Group } =
+  createBottomTabNavigator<RootBottomParamList>();
 
 function SettingsScreen() {
   return (
@@ -40,16 +48,30 @@ const BottomTabBar = ({ navigation, state }) => (
 );
 
 const TabNavigator = () => (
-  <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+  <Navigator
+    tabBar={(props) => <BottomTabBar {...props} />}
+    initialRouteName="Home"
+  >
     <Screen name="Transactions" component={SettingsScreen} />
-    <Screen name="Home" component={Home} />
+    <Screen name="Home" component={Home} options={{ headerShown: false }} />
     <Screen name="Account" component={SettingsScreen} />
   </Navigator>
 );
 export function NavigationContainer() {
   return (
     <NContainer>
-      <TabNavigator />
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen
+            name="Tab"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: "modal" }}>
+          <Stack.Screen name="AddTransaction" component={AddTransaction} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NContainer>
   );
 }

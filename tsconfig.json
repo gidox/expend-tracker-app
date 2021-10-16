@@ -16,7 +16,9 @@
       "@screens": ["screens"],
       "@screens/*": ["screens/*"],
       "@navigation": ["navigation"],
-      "@navigation/*": ["navigation/*"]
+      "@navigation/*": ["navigation/*"],
+      "@theme": ["theme"],
+      "@theme/*": ["theme/*"]
     }
   }
 }

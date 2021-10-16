@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef, useState, ReactElement } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -10,7 +10,7 @@ import {
   CheckBox,
   Divider,
 } from "@ui-kitten/components";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Keyboard } from "react-native";
 
 type FormData = {
   amount: string;
@@ -29,7 +29,6 @@ const transactionValidationSchema = Yup.object().shape({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100%",
     paddingHorizontal: 10,
   },
   formControl: {
@@ -38,7 +37,10 @@ const styles = StyleSheet.create({
 });
 
 export function TransactionForm(): React.ReactElement {
-  const [date, setDate] = React.useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const amountRef = useRef();
+  const datePickerRef = useRef();
+
   const initialValues: FormData = {
     amount: "",
     date: "",
@@ -64,28 +66,41 @@ export function TransactionForm(): React.ReactElement {
           <>
             <View style={styles.formControl}>
               <Input
+                autoFocus
                 value={values.description}
                 placeholder="Description"
                 onChangeText={handleChange("description")}
                 onBlur={handleBlur("description")}
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  amountRef?.current?.focus();
+                }}
               />
               {errors && errors.description && (
-                <Text>{errors.description}</Text>
+                <Text style={{ color: "danger" }}>{errors.description}</Text>
               )}
             </View>
             <View style={styles.formControl}>
               <Input
                 value={values.amount}
+                ref={amountRef}
                 keyboardType="number-pad"
                 placeholder="Amount"
                 onChangeText={handleChange("amount")}
                 onBlur={handleBlur("amount")}
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                  datePickerRef?.current?.focus();
+                }}
               />
               {errors && errors.amount && <Text>{errors.amount}</Text>}
             </View>
             <View style={styles.formControl}>
               <Datepicker
+                ref={datePickerRef}
                 date={new Date(date)}
+                onFocus={() => Keyboard.dismiss()}
                 onSelect={(nextDate) => {
                   setDate(nextDate);
                   setFieldValue("date", nextDate.toISOString());
