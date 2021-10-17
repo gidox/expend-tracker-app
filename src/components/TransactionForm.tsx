@@ -28,12 +28,18 @@ const transactionValidationSchema = Yup.object().shape({
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
     paddingHorizontal: 10,
   },
   formControl: {
     marginVertical: 10,
   },
+  bottom: {
+    position: 'absolute',
+    bottom: 40,
+    flex: 1,
+    flexDirection: 'row',
+  }
 });
 
 export function TransactionForm(): React.ReactElement {
@@ -49,7 +55,7 @@ export function TransactionForm(): React.ReactElement {
   };
 
   return (
-    <View style={styles.container}>
+    <Layout style={styles.container}>
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => console.log(values)}
@@ -101,6 +107,8 @@ export function TransactionForm(): React.ReactElement {
                 ref={datePickerRef}
                 date={new Date(date)}
                 onFocus={() => Keyboard.dismiss()}
+                style={{ zIndex: 9999 }}
+
                 onSelect={(nextDate) => {
                   setDate(nextDate);
                   setFieldValue("date", nextDate.toISOString());
@@ -119,13 +127,15 @@ export function TransactionForm(): React.ReactElement {
                 {`Save transaction has tag?`}
               </CheckBox>
             </View>
-
             <Divider />
+            <View style={styles.bottom}>
 
-            <Button onPress={() => handleSubmit()}>Submit</Button>
+              <Button style={{ flex: 1, marginLeft: 20}} onPress={() => handleSubmit()}>Submit</Button>
+
+            </View>
           </>
         )}
       </Formik>
-    </View>
+    </Layout>
   );
 }

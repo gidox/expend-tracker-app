@@ -18,7 +18,9 @@
       "@navigation": ["navigation"],
       "@navigation/*": ["navigation/*"],
       "@theme": ["theme"],
-      "@theme/*": ["theme/*"]
+      "@theme/*": ["theme/*"],
+      "@shared": ["shared"],
+      "@shared/*": ["shared/*"]
     }
   }
 }

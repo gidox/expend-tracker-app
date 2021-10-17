@@ -68,7 +68,7 @@ export function NavigationContainer() {
             options={{ headerShown: false }}
           />
         </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Group>
           <Stack.Screen name="AddTransaction" component={AddTransaction} />
         </Stack.Group>
       </Stack.Navigator>

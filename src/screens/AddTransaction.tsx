@@ -1,19 +1,20 @@
 import { TransactionForm } from "@components";
 import { HOME_SPACING } from "@theme";
+import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { View } from "react-native";
 
 export default function AddTransaction(): React.ReactElement {
   return (
-    <View
+    <Layout
       style={{
         flex: 1,
         flexDirection: "column",
         paddingHorizontal: HOME_SPACING,
-        marginTop: 20,
+        paddingTop: 20,
       }}
     >
       <TransactionForm />
-    </View>
+    </Layout>
   );
 }

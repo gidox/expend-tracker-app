@@ -11,6 +11,7 @@ module.exports = function (api) {
             "@navigation": "./src/navigation",
             "@screens": "./src/screens",
             "@theme": "./src/theme",
+            "@shared": "./src/shared",
           },
         },
       ],
