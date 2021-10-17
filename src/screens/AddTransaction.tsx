@@ -1,10 +1,16 @@
 import { TransactionForm } from "@components";
+import { useTransactionMutation } from "@hooks";
 import { HOME_SPACING } from "@theme";
 import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { View } from "react-native";
 
-export default function AddTransaction(): React.ReactElement {
+export default function AddTransaction({ navigation }): React.ReactElement {
+  const { mutate, isLoading } = useTransactionMutation({
+    onSuccess: () => {
+      navigation.goBack();
+    },
+  });
   return (
     <Layout
       style={{
@@ -14,7 +20,7 @@ export default function AddTransaction(): React.ReactElement {
         paddingTop: 20,
       }}
     >
-      <TransactionForm />
+      <TransactionForm onSubmit={mutate} isLoading={isLoading} />
     </Layout>
   );
 }

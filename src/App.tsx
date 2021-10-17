@@ -16,6 +16,16 @@ import {
 import "intl";
 import "intl/locale-data/jsonp/en"; // or any other locale you need
 import "intl/locale-data/jsonp/es"; // or any other locale you need
+import "react-native-url-polyfill/auto";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+    },
+  },
+});
 
 export default function App(): React.ReactElement {
   let [fontsLoaded] = useFonts({
@@ -32,7 +42,9 @@ export default function App(): React.ReactElement {
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light} customMapping={mapping}>
         <StatusBar style="auto" />
-        <NavigationContainer />
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer />
+        </QueryClientProvider>
       </ApplicationProvider>
     </>
   );

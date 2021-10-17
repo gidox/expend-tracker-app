@@ -1,105 +1,17 @@
 import { Row, TransactionForm, TransactionList } from "@components";
+import { useTransactions } from "@hooks";
+import { Skeleton } from "@motify/skeleton";
 import { RootBottomParamList } from "@navigation";
 import { useNavigation } from "@react-navigation/core";
 import { HOME_SPACING } from "@theme";
 import { Icon, Text, Button, Layout } from "@ui-kitten/components";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-
-const transactionList = [
-  {
-    id: 1,
-    description: "Electricity bill",
-    amount: 40,
-    currency: "USD",
-    date: "2021-10-13T04:44:17.089Z",
-    type: "db",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 2,
-    description: "Rent bill",
-    amount: 400,
-    date: "2021-10-15T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 3,
-    description: "Salary",
-    amount: 2000,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "cr",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 4,
-    description: "Gym",
-    amount: 21,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 5,
-    description: "Supermarket food",
-    amount: 65,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 6,
-    description: "Restaurant",
-    amount: 30,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 7,
-    description: "Restaurant",
-    amount: 30,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 8,
-    description: "Restaurant",
-    amount: 30,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 9,
-    description: "Restaurant",
-    amount: 30,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-  {
-    id: 10,
-    description: "Restaurant",
-    amount: 30,
-    date: "2021-10-10T04:44:17.089Z",
-    type: "db",
-    currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z",
-  },
-];
+import { supabase } from "../supabaseClient";
 
 export default function Home({ navigation }): React.ReactElement {
+  const { data, isFetching, isFetched } = useTransactions();
+
   return (
     <Layout
       style={{
@@ -139,11 +51,13 @@ export default function Home({ navigation }): React.ReactElement {
         </Text>
       </Row>
 
-      {transactionList.length ? (
-        <View style={{ marginHorizontal: 5, flex: 1 }}>
-          <TransactionList transactions={transactionList} />
-        </View>
-      ) : (
+      <Skeleton colorMode="light" show={isFetching}>
+        {data && data.length > 0 ? (
+          <TransactionList transactions={data} />
+        ) : null}
+      </Skeleton>
+
+      {isFetched && data && data.length === 0 && (
         <View style={{ marginHorizontal: 5, flex: 1 }}>
           <Text style={{ textAlign: "center" }}>No data, add new</Text>
         </View>

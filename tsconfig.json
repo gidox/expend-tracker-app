@@ -20,7 +20,9 @@
       "@theme": ["theme"],
       "@theme/*": ["theme/*"],
       "@shared": ["shared"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@hooks": ["hooks"],
+      "@hooks/*": ["hooks/*"]
     }
   }
 }

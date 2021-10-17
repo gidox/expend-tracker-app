@@ -46,12 +46,20 @@ export function TransactionList({
       <View style={{ width: "65%" }}>
         <Text category="p1">{item.description}</Text>
         <Text category="c2" style={{ color: "#A3A5A9" }}>
-          {format(new Date(item.date), "MMM dd YYY")}
+          {format(new Date(item.dated), "MMM dd YYY")}
         </Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text category="p2" style={{ textAlign: "right" }} status="basic">
-          {moneyFormat(item.amount, item.currency)}
+        <Text
+          category="p2"
+          style={[
+            { textAlign: "right", color: "#06d6a0" },
+            item.type === "db" && { color: "#f72585" },
+          ]}
+          status="basic"
+        >
+          {item.type === "db" && "-"}
+          {moneyFormat(item.amount, item.currency || "USD")}
         </Text>
       </View>
     </Row>

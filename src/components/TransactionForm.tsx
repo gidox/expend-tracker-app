@@ -9,19 +9,20 @@ import {
   Datepicker,
   CheckBox,
   Divider,
+  Radio,
+  Spinner,
 } from "@ui-kitten/components";
 import { View, StyleSheet, Keyboard } from "react-native";
+import { TransactionFormData } from "@shared";
 
-type FormData = {
-  amount: string;
-  date: string;
-  description: string;
-  saveAsTag: boolean;
+type TransactionFormProps = {
+  onSubmit: (transactionData: TransactionFormData) => void;
+  isLoading: boolean;
 };
 
 const transactionValidationSchema = Yup.object().shape({
   amount: Yup.string().required("*Required"),
-  date: Yup.string().required("*Required"),
+  dated: Yup.string().required("*Required"),
   description: Yup.string(),
   saveAsTag: Yup.boolean(),
 });
@@ -35,22 +36,26 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   bottom: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 40,
     flex: 1,
-    flexDirection: 'row',
-  }
+    flexDirection: "row",
+  },
 });
 
-export function TransactionForm(): React.ReactElement {
+export function TransactionForm({
+  onSubmit,
+  isLoading = false,
+}: TransactionFormProps): React.ReactElement {
   const [date, setDate] = useState(new Date());
   const amountRef = useRef();
   const datePickerRef = useRef();
 
-  const initialValues: FormData = {
+  const initialValues: TransactionFormData = {
     amount: "",
-    date: "",
+    dated: "",
     description: "",
+    type: "db",
     saveAsTag: false,
   };
 
@@ -58,7 +63,7 @@ export function TransactionForm(): React.ReactElement {
     <Layout style={styles.container}>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={onSubmit}
         validationSchema={transactionValidationSchema}
       >
         {({
@@ -108,14 +113,34 @@ export function TransactionForm(): React.ReactElement {
                 date={new Date(date)}
                 onFocus={() => Keyboard.dismiss()}
                 style={{ zIndex: 9999 }}
-
                 onSelect={(nextDate) => {
                   setDate(nextDate);
-                  setFieldValue("date", nextDate.toISOString());
+                  setFieldValue("dated", nextDate.toISOString());
                 }}
               />
-              {errors && errors.date && <Text>{errors.date}</Text>}
+              {errors && errors.dated && <Text>{errors.dated}</Text>}
             </View>
+
+            <View
+              style={[
+                styles.formControl,
+                { flexDirection: "row", marginVertical: 20 },
+              ]}
+            >
+              <Radio
+                checked={values.type === "db"}
+                onChange={() => setFieldValue("type", "db")}
+              >
+                Debit
+              </Radio>
+              <Radio
+                checked={values.type === "cr"}
+                onChange={() => setFieldValue("type", "cr")}
+              >
+                Credit
+              </Radio>
+            </View>
+
             <Divider />
             <View style={styles.formControl}>
               <CheckBox
@@ -129,9 +154,14 @@ export function TransactionForm(): React.ReactElement {
             </View>
             <Divider />
             <View style={styles.bottom}>
-
-              <Button style={{ flex: 1, marginLeft: 20}} onPress={() => handleSubmit()}>Submit</Button>
-
+              <Button
+                style={{ flex: 1, marginLeft: 20 }}
+                onPress={() => handleSubmit()}
+                accessoryLeft={isLoading && LoadingIndicator}
+                disabled={isLoading}
+              >
+                Submit
+              </Button>
             </View>
           </>
         )}
@@ -139,3 +169,17 @@ export function TransactionForm(): React.ReactElement {
     </Layout>
   );
 }
+
+const LoadingIndicator = (props) => (
+  <View
+    style={[
+      props.style,
+      {
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    ]}
+  >
+    <Spinner size="small" status="control" />
+  </View>
+);
