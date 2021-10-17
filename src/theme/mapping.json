@@ -18,6 +18,10 @@
     "text-paragraph-1-font-weight": "400",
     "text-paragraph-1-font-family": "Roboto_400Regular",
 
+    "text-paragraph-2-font-size": 14,
+    "text-paragraph-2-font-weight": "400",
+    "text-paragraph-2-font-family": "Roboto_400Regular",
+
     "text-caption-1-font-size": 12,
     "text-caption-1-font-weight": "400",
     "text-caption-1-font-family": "Roboto_400Regular",

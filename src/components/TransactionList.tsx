@@ -1,8 +1,10 @@
+import { Row } from "./Row";
 import { moneyFormat } from "@shared";
 import { Transaction } from "@shared/types";
 import { Avatar, Icon, List, ListItem, Text } from "@ui-kitten/components";
+import { format } from "date-fns";
 import React, { useRef, useState, ReactElement } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 type TransactionListProps = {
   transactions: Transaction[];
@@ -25,19 +27,41 @@ export function TransactionList({
     item: Transaction;
     index: number;
   }) => (
-    <ListItem
-      title={`${item.description}`}
-      description={item.date}
-      accessoryLeft={
-        item.type === "db" ? (
-          <Icon name="trending-down-outline" fill="#f72585" />
+    <Row centered>
+      <View style={{ width: "15%" }}>
+        {item.type === "db" ? (
+          <Icon
+            name="trending-down-outline"
+            style={{ height: 25, width: 25 }}
+            fill="#f72585"
+          />
         ) : (
-          <Icon name="trending-up-outline" fill="#06d6a0" />
-        )
-      }
-      accessoryRight={<Text>{moneyFormat(item.amount, item.currency)}</Text>}
-    />
+          <Icon
+            name="trending-up-outline"
+            style={{ height: 25, width: 25 }}
+            fill="#06d6a0"
+          />
+        )}
+      </View>
+      <View style={{ width: "65%" }}>
+        <Text category="p1">{item.description}</Text>
+        <Text category="c2" style={{ color: "#A3A5A9" }}>
+          {format(new Date(item.date), "MMM dd YYY")}
+        </Text>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text category="p2" style={{ textAlign: "right" }} status="basic">
+          {moneyFormat(item.amount, item.currency)}
+        </Text>
+      </View>
+    </Row>
   );
 
-  return <List data={transactions} renderItem={renderItem} />;
+  return (
+    <FlatList
+      data={transactions}
+      renderItem={renderItem}
+      keyExtractor={(item) => `${item.id}`}
+    />
+  );
 }

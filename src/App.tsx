@@ -13,6 +13,9 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
+import "intl";
+import "intl/locale-data/jsonp/en"; // or any other locale you need
+import "intl/locale-data/jsonp/es"; // or any other locale you need
 
 export default function App(): React.ReactElement {
   let [fontsLoaded] = useFonts({

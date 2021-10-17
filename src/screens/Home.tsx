@@ -14,7 +14,7 @@ const transactionList = [
     currency: "USD",
     date: "2021-10-13T04:44:17.089Z",
     type: "db",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const transactionList = [
     date: "2021-10-15T04:44:17.089Z",
     type: "db",
     currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const transactionList = [
     date: "2021-10-10T04:44:17.089Z",
     type: "cr",
     currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const transactionList = [
     date: "2021-10-10T04:44:17.089Z",
     type: "db",
     currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const transactionList = [
     date: "2021-10-10T04:44:17.089Z",
     type: "db",
     currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
   {
     id: 6,
@@ -59,9 +59,45 @@ const transactionList = [
     date: "2021-10-10T04:44:17.089Z",
     type: "db",
     currency: "USD",
-    createdAt: "2021-10-17T04:44:17.089Z"
+    createdAt: "2021-10-17T04:44:17.089Z",
   },
-]
+  {
+    id: 7,
+    description: "Restaurant",
+    amount: 30,
+    date: "2021-10-10T04:44:17.089Z",
+    type: "db",
+    currency: "USD",
+    createdAt: "2021-10-17T04:44:17.089Z",
+  },
+  {
+    id: 8,
+    description: "Restaurant",
+    amount: 30,
+    date: "2021-10-10T04:44:17.089Z",
+    type: "db",
+    currency: "USD",
+    createdAt: "2021-10-17T04:44:17.089Z",
+  },
+  {
+    id: 9,
+    description: "Restaurant",
+    amount: 30,
+    date: "2021-10-10T04:44:17.089Z",
+    type: "db",
+    currency: "USD",
+    createdAt: "2021-10-17T04:44:17.089Z",
+  },
+  {
+    id: 10,
+    description: "Restaurant",
+    amount: 30,
+    date: "2021-10-10T04:44:17.089Z",
+    type: "db",
+    currency: "USD",
+    createdAt: "2021-10-17T04:44:17.089Z",
+  },
+];
 
 export default function Home({ navigation }): React.ReactElement {
   return (
@@ -75,13 +111,16 @@ export default function Home({ navigation }): React.ReactElement {
     >
       <Row between centered>
         <View>
-          <Text category="label" status="primary" style={{ letterSpacing: 2, paddingBottom: 3 }}>
+          <Text
+            category="label"
+            status="primary"
+            style={{ letterSpacing: 2, paddingBottom: 3 }}
+          >
             Welcome Back
           </Text>
           <Text category="h2" status="basic">
             Anakin Skywalker
           </Text>
-
         </View>
 
         <Button
@@ -94,18 +133,21 @@ export default function Home({ navigation }): React.ReactElement {
         </Button>
       </Row>
 
-      <Row style={{ marginTop: 40}}>
-
-          <Text status="basic">
-            Lastest transactions
-          </Text>
-
+      <Row style={{ marginTop: 40 }}>
+        <Text status="basic" category="label" style={{ fontSize: 16 }}>
+          Lastest transactions:
+        </Text>
       </Row>
 
-      <TransactionList transactions={transactionList} />
-
-
-
+      {transactionList.length ? (
+        <View style={{ marginHorizontal: 5, flex: 1 }}>
+          <TransactionList transactions={transactionList} />
+        </View>
+      ) : (
+        <View style={{ marginHorizontal: 5, flex: 1 }}>
+          <Text style={{ textAlign: "center" }}>No data, add new</Text>
+        </View>
+      )}
     </Layout>
   );
 }
